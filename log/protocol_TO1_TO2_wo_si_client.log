@@ -1,0 +1,505 @@
+pi@raspberrypi:~/client-sdk-fidoiot $ ./build/linux-client
+14:24:04:336 Starting FIDO Device Onboard
+14:24:04:343 ./data/mfg_proxy.dat file is empty!
+'./data/mfg_proxy.dat' with proxy info absent
+14:24:04:343 ./data/rv_proxy.dat file is empty!
+'./data/rv_proxy.dat' with proxy info absent
+14:24:04:344 ./data/owner_proxy.dat file is empty!
+'./data/owner_proxy.dat' with proxy info absent
+14:24:04:344 DeviceCredential is non-empty. Set state to run TO1/TO2
+14:24:04:344 Reading DeviceCredential blob of length 106
+14:24:04:344 HMAC generation from TPM function called.
+14:24:04:344 All required function parameters available.
+14:24:04:344 Generate Primary key context.
+14:24:04:382 TCTI Initialized succesfully!!
+14:24:04:382 Esys Context created succesfully!!
+14:24:05:447 TPM Primary Key Context created successfully.
+14:24:05:447 TPM HMAC Private Key file size retreived successfully.
+14:24:05:447 TPM HMAC Private Key file content copied successfully to buffer.
+14:24:05:447 TPM HMAC Private Key Unmarshal complete successfully.
+14:24:05:447 TPM HMAC Public Key file size retreived successfully.
+14:24:05:447 TPM HMAC Public Key file content copied successfully to buffer.
+14:24:05:447 TPM HMAC Public Key Unmarshal complete successfully.
+14:24:07:120 TPM HMAC Key Context generated successfully.
+14:24:07:120 Data copied from input buffer to TPM data structure.
+14:24:09:159 HMAC created successfully.
+14:24:09:160 HMAC generation for data sequence completed successfully.
+14:24:10:706 HMAC key handle flushed successfully.
+14:24:11:701 Auth session handle flushed successfully.
+14:24:12:157 Primary key handle flushed successfully.
+14:24:12:161 TSS context flushed successfully.
+14:24:12:161 TPM HMAC computed successfully!
+14:24:12:161 There are 1 RendezvousDirective(s) in the RendezvousInfo
+14:24:12:161 Processing RendezvousDirective Index 0
+14:24:12:161 There are 5 RendezvousInstr(s)
+14:24:12:161 Processing RendezvousInstr Index 0
+14:24:12:161 Added RendezvousInstr entry 1
+14:24:12:161 Processing RendezvousInstr Index 1
+14:24:12:161 Added RendezvousInstr entry 2
+14:24:12:161 Processing RendezvousInstr Index 2
+14:24:12:161 Added RendezvousInstr entry 3
+14:24:12:161 Processing RendezvousInstr Index 3
+14:24:12:161 Added RendezvousInstr entry 4
+14:24:12:161 Processing RendezvousInstr Index 4
+14:24:12:161 Added RendezvousInstr entry 5
+14:24:12:162 Added RendezvousDirective entry 1
+14:24:12:162 RendezvousInfo read completed
+14:24:12:162 Device is ready for Ownership transfer
+Maximum supported DeviceServiceInfo size: 8192 bytes
+Maximum supported OwnerServiceInfo size: 8192 bytes
+Reuse support is enabled
+Resale support is enabled
+14:24:12:162
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                               Starting TO1
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+14:24:12:162 TO1.HelloRV started
+14:24:12:162 eASigInfo write successful
+14:24:12:162 TO1.HelloRV completed successfully
+14:24:12:163 fdo_prot_ctx_run Tx Request Body length: 21
+14:24:12:163 fdo_prot_ctx_run Tx Request Body:
+8250f09cff3b6d844c18b5133b6b8dd5f979822640
+14:24:12:163 Proxy enabled but Not set
+14:24:12:163 using DNS: localhost
+14:24:12:163 Resolving DNS-URL: <localhost>
+14:24:12:315 ssl connection successful
+14:24:12:323 Connecting to Rendezvous server
+14:24:12:323 Proxy enabled but Not set
+14:24:12:323 using IP
+14:24:12:414 ssl connection successful
+14:24:12:414 REST:header(151):POST https://localhost:8041/fdo/101/msg/30 HTTP/1.1
+HOST:localhost:8041
+Content-type:application/cbor
+Content-length:21
+_connection: keep-alive
+
+
+14:24:12:686 REST: HTTP response line: HTTP/1.1 200
+14:24:12:686 Response code 200 received ()
+14:24:12:686 Authorization: Bearer 0oREoQE4IqBYTKcBY3J2cwJjdG8xA2NmZG8EGmKHNEgFGmKHNAwGGmKHNAwHWCeCglDwnP87bYRMGLUTO2uN1fl5giZAUJFn+b4ibEGZv7ts/qhQqUdYYMp+ZePFN9ilWKnUB5nuk3BBpC3OHY2bNldY/xWT8EHOoltMqv7Tb7LHZFZTVEHtlf5eHJpzg4XvU9R1ztdXYGyor+91ufOzsnwfYvqdNyfR+hISp4XsT8l5KJG5Wjfavg==
+14:24:12:686 Message-Type: 31
+14:24:12:686 Content type: application/cbor
+14:24:12:686 Content-length: 21
+14:24:12:686 Body: Date
+14:24:12:688 fdo_prot_ctx_run Rx Response Body:
+82509167f9be226c4199bfbb6cfea850a947822640
+14:24:12:688 FDOProtTO1: Received message type 31 : 21 bytes
+14:24:12:688 TO1.HelloRVAck started
+14:24:12:688 eBSigInfo read successful
+14:24:12:688 TO1.HelloRVAck completed successfully
+14:24:12:688 TO1.ProveToRV started
+14:24:12:689 TPM Engine successfully loaded.
+14:24:12:689 Private key successfully loaded in TPM Engine format.
+14:24:12:689 ECDSA signature generation - ECC key successfully loaded.
+14:24:13:607 TO1.ProveToRV completed successfully
+14:24:13:607 fdo_prot_ctx_run Tx Request Body length: 113
+14:24:13:607 fdo_prot_ctx_run Tx Request Body:
+d28443a10126a05826a20b5101f09cff3b6d844c18b5133b6b8dd5f9790a509167f9be226c4199bfbb6cfea850a9475840dfedb3f27fdc66c360db2496f2cddcc2f4983872344683d47dcb11f2b08baf1c976c8a590d9c7e553dc71e71fc3ce6fded9c22a056bdec6622663934337fba9d
+14:24:13:608 Connecting to Rendezvous server
+14:24:13:608 Proxy enabled but Not set
+14:24:13:608 using IP
+14:24:13:699 ssl connection successful
+14:24:13:699 REST:header(423):POST https://localhost:8041/fdo/101/msg/32 HTTP/1.1
+HOST:localhost:8041
+Content-type:application/cbor
+Content-length:113
+_connection: keep-alive
+Authorization:Bearer 0oREoQE4IqBYTKcBY3J2cwJjdG8xA2NmZG8EGmKHNEgFGmKHNAwGGmKHNAwHWCeCglDwnP87bYRMGLUTO2uN1fl5giZAUJFn+b4ibEGZv7ts/qhQqUdYYMp+ZePFN9ilWKnUB5nuk3BBpC3OHY2bNldY/xWT8EHOoltMqv7Tb7LHZFZTVEHtlf5eHJpzg4XvU9R1ztdXYGyor+91ufOzsnwfYvqdNyfR+hISp4XsT8l5KJG5Wjfavg==
+
+
+14:24:13:980 REST: HTTP response line: HTTP/1.1 200
+14:24:13:980 Response code 200 received ()
+14:24:13:980 Authorization: Bearer 0oREoQE4IqBYTKcBY3J2cwJjdG8xA2NmZG8EGmKHNEgFGmKHNAwGGmKHNAwHWCeCglDwnP87bYRMGLUTO2uN1fl5giZAUJFn+b4ibEGZv7ts/qhQqUdYYMp+ZePFN9ilWKnUB5nuk3BBpC3OHY2bNldY/xWT8EHOoltMqv7Tb7LHZFZTVEHtlf5eHJpzg4XvU9R1ztdXYGyor+91ufOzsnwfYvqdNyfR+hISp4XsT8l5KJG5Wjfavg==
+14:24:13:980 Message-Type: 33
+14:24:13:980 Content type: application/cbor
+14:24:13:980 Content-length: 133
+14:24:13:980 Body: Date
+14:24:13:982 fdo_prot_ctx_run Rx Response Body:
+d28443a10126a0583a828184447f000001696c6f63616c686f7374191f6b05822f5820f101b7a3dd733d5eacac3fbcc4fbe769f7b06061717b254c203eaeb1dbe1c6335840400d796d1c9d807f99fc6625e9daa57ca83753e22d1caedcedfae0a68bb521e5d4f0108901701fc4d94b160d136b091cfb69bc48f4679d041147b6bf4c548dae
+14:24:13:982 FDOProtTO1: Received message type 33 : 133 bytes
+14:24:13:982 TO1.RVRedirect started
+14:24:13:983 RVTO2Addr: There are 1 RVTO2AddrEntry(s)
+14:24:13:983 TO1.RVRedirect completed successfully
+14:24:13:983
+------------------------------------ TO1 Successful --------------------------------------
+14:24:13:983
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                               Starting TO2
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+14:24:13:983 TO2.HelloDevice started
+14:24:13:983 eASigInfo write successful
+14:24:13:983 TO2.HelloDevice completed successfully
+14:24:13:983 fdo_prot_ctx_run Tx Request Body length: 50
+14:24:13:983 fdo_prot_ctx_run Tx Request Body:
+861922bc50f09cff3b6d844c18b5133b6b8dd5f979509538064044e677f3f4236531208c1b17674543444832353601822640
+14:24:13:983 Proxy enabled but Not set
+14:24:13:984 using DNS: localhost
+14:24:13:984 Resolving DNS-URL: <localhost>
+14:24:14: 79 ssl connection successful
+14:24:14: 87 Connecting to owner server
+14:24:14: 87 Proxy enabled but Not set
+14:24:14: 87 using IP
+14:24:14:151 ssl connection successful
+14:24:14:151 REST:header(151):POST https://localhost:8043/fdo/101/msg/60 HTTP/1.1
+HOST:localhost:8043
+Content-type:application/cbor
+Content-length:50
+_connection: keep-alive
+
+
+14:24:14:603 REST: HTTP response line: HTTP/1.1 200
+14:24:14:603 Response code 200 received ()
+14:24:14:603 Authorization: 3b8a5f3e68804af3cd532cd1976cf15e
+14:24:14:603 Message-Type: 61
+14:24:14:603 Content type: application/cbor
+14:24:14:603 Content-length: 580
+14:24:14:603 Body: Date
+14:24:14:605 fdo_prot_ctx_run Rx Response Body:
+d28443a10126a219010050af1c7e6deb254240b9ced15fc78976de190101830a01585b3059301306072a8648ce3d020106082a8648ce3d03010703420004984ced65dde6e522daa3597d377b5696275aa86be231551f45223052d0c92013d481ab6f00a46c08b4ca50fb929f4cfe6f48153f6216a00bacc4e28568dcf1035901818858c886186550f09cff3b6d844c18b5133b6b8dd5f979818582054a696c6f63616c686f7374820343191f69820c4102820245447f000001820443191f69686d6f64656c2d3031830a01585b3059301306072a8648ce3d020106082a8648ce3d0301070342000430353d6c7f0f9ef503e04657a8650e5f7ce51942bab5124d346fca26000103109b9270336b151f98795023f79c77798c5bc1612fc1e1821476b196e3d180e733822f582077fc81164a8066f1578ec1fcaa2e22c74dd8fe96c102026716a8aca62e387ecb0182055820fab5a96962c3d4834cb0766c1da880fecbe1d7fad5c3ac828df992e703200787509538064044e677f3f4236531208c1b1782264058560020adc430f37ca2bbed698df11a03ff4369a5551e4257dbdd4ca4ab318c9f7f1da100208cd5aa6502a8d5ab5c25cfc06e6220f17aad2bc75bd3e8a029a560b79f81b3a500108d46bbcd69a38d55a6ba48c6ae085da3822f58202335cedae674ef4d1a9766300f37607ac0d7ba71184acb30ee78015301e31c6100584061deb5cb2f00fd20b00ae30d33ed1c3b9cd534ac92224645c6932817296e215bcb7b09f49463f24d3af169fa1f1a8b7dc890583890e104c31267bdffc551f066
+14:24:14:609 FDOProtTO2: Received message type 61 : 580 bytes
+14:24:14:609 TO2.ProveOVHdr started
+14:24:14:609 PublicKey.pkBody length: 91 bytes
+14:24:14:610 Signature verifies OK.
+14:24:14:610 TO2.ProveOVHdr: COSE signature verification successful
+14:24:14:611 Signature verifies OK.
+14:24:14:611 TO2.ProveOVHdr: to1d signature verification successful
+14:24:14:611 fdo_ov_hdr_read OVHeader read started!
+14:24:14:611 There are 1 RendezvousDirective(s) in the RendezvousInfo
+14:24:14:611 Processing RendezvousDirective Index 0
+14:24:14:611 There are 5 RendezvousInstr(s)
+14:24:14:611 Processing RendezvousInstr Index 0
+14:24:14:611 Added RendezvousInstr entry 1
+14:24:14:611 Processing RendezvousInstr Index 1
+14:24:14:611 Added RendezvousInstr entry 2
+14:24:14:611 Processing RendezvousInstr Index 2
+14:24:14:611 Added RendezvousInstr entry 3
+14:24:14:611 Processing RendezvousInstr Index 3
+14:24:14:611 Added RendezvousInstr entry 4
+14:24:14:611 Processing RendezvousInstr Index 4
+14:24:14:611 Added RendezvousInstr entry 5
+14:24:14:611 Added RendezvousDirective entry 1
+14:24:14:611 RendezvousInfo read completed
+14:24:14:611 PublicKey.pkBody length: 91 bytes
+14:24:14:611 fdo_ov_hdr_read OVHeader read completed!
+14:24:14:611 HMAC generation from TPM function called.
+14:24:14:611 All required function parameters available.
+14:24:14:611 Generate Primary key context.
+14:24:14:627 TCTI Initialized succesfully!!
+14:24:14:627 Esys Context created succesfully!!
+14:24:15:180 TPM Primary Key Context created successfully.
+14:24:15:180 TPM HMAC Private Key file size retreived successfully.
+14:24:15:180 TPM HMAC Private Key file content copied successfully to buffer.
+14:24:15:180 TPM HMAC Private Key Unmarshal complete successfully.
+14:24:15:181 TPM HMAC Public Key file size retreived successfully.
+14:24:15:181 TPM HMAC Public Key file content copied successfully to buffer.
+14:24:15:181 TPM HMAC Public Key Unmarshal complete successfully.
+14:24:16:820 TPM HMAC Key Context generated successfully.
+14:24:16:820 Data copied from input buffer to TPM data structure.
+14:24:18:866 HMAC created successfully.
+14:24:18:866 HMAC generation for data sequence completed successfully.
+14:24:20:412 HMAC key handle flushed successfully.
+14:24:21:432 Auth session handle flushed successfully.
+14:24:21:887 Primary key handle flushed successfully.
+14:24:21:891 TSS context flushed successfully.
+14:24:21:891 TO2.ProveOVHdr: OVHeader.OVPubKey hash verification successful
+14:24:21:892 TO2.ProveOVHdr: Total number of OwnershipVoucher.OVEntries: 1
+14:24:21:892 TO2.ProveOVHdr: Valid Ownership Header received
+14:24:21:892 eBSigInfo read successful
+14:24:21:893 Hash write completed
+14:24:21:893 Hash write completed
+14:24:21:893 TO2.ProveOVHdr completed. 1 OVEntry(s) to follow
+14:24:21:893 TO2.GetOVNextEntry started
+14:24:21:893 TO2.GetOVNextEntry completed successfully
+14:24:21:893 fdo_prot_ctx_run Tx Request Body length: 2
+14:24:21:893 fdo_prot_ctx_run Tx Request Body:
+8100
+14:24:21:893 Connecting to owner server
+14:24:21:894 Proxy enabled but Not set
+14:24:21:894 using IP
+14:24:22: 19 ssl connection successful
+14:24:22: 19 REST:header(198):POST https://localhost:8043/fdo/101/msg/62 HTTP/1.1
+HOST:localhost:8043
+Content-type:application/cbor
+Content-length:2
+_connection: keep-alive
+Authorization:3b8a5f3e68804af3cd532cd1976cf15e
+
+
+14:24:22: 55 REST: HTTP response line: HTTP/1.1 200
+14:24:22: 55 Response code 200 received ()
+14:24:22: 55 Authorization: 3b8a5f3e68804af3cd532cd1976cf15e
+14:24:22: 55 Message-Type: 63
+14:24:22: 55 Content type: application/cbor
+14:24:22: 55 Content-length: 247
+14:24:22: 55 Body: Date
+14:24:22: 57 fdo_prot_ctx_run Rx Response Body:
+8200d28443a10126a058aa84822f58208dd22b7263469c9ee58baf6c13840011c2324f33781c8d3fc860fc33c200744f822f582067048faafb76624c1d84e75627bb12097581c5bbd6e88f9969394e8ef9827779f6830a01585b3059301306072a8648ce3d020106082a8648ce3d03010703420004984ced65dde6e522daa3597d377b5696275aa86be231551f45223052d0c92013d481ab6f00a46c08b4ca50fb929f4cfe6f48153f6216a00bacc4e28568dcf1035840aa463ff5ef9a4ea5ec05ba58ad4ece05e74076844c90e13986e2df6ad160079639b12f535bd42ac7d75c8ec6115c2913c2af0388bd4a55140c60dd5ed781c5e6
+14:24:22: 61 FDOProtTO2: Received message type 63 : 247 bytes
+14:24:22: 61 TO2.OVNextEntry started
+14:24:22: 62 Signature verifies OK.
+14:24:22: 62 TO2.OVNextEntry: OVEntry Signature verification successful
+14:24:22: 62 PublicKey.pkBody length: 91 bytes
+14:24:22: 62 TO2.OVNextEntry: Verified OVEntry: 0
+14:24:22: 62 TO2.OVNextEntry: All 1 OVEntry(s) have been verified successfully!
+14:24:22: 62 TO2.ProveDevice started
+14:24:22: 62 Entity Attestation Token PayloadBaseMap: EATPayload to be written
+14:24:22: 62 TO2.ProveDevice: EATPayloadBaseMap created successfuly
+14:24:22: 63 TPM Engine successfully loaded.
+14:24:22: 64 Private key successfully loaded in TPM Engine format.
+14:24:22: 64 ECDSA signature generation - ECC key successfully loaded.
+14:24:23:337 TO2.ProveDevice comleted successfully
+14:24:23:337 fdo_prot_ctx_run Tx Request Body length: 225
+14:24:23:337 fdo_prot_ctx_run Tx Request Body:
+d28443a10126a139010250d110c1613a873cc1ec907f72fa0a1dd75882a30b5101f09cff3b6d844c18b5133b6b8dd5f9790a50af1c7e6deb254240b9ced15fc78976de39010081585600206c26020eb8c86ca2e64dda1a950268b04ea6770bf500c8d6b67c34b904ecd1ba00205275e1fb31894d544f4e7ee6ea840e82982ebc7a00cea322afbabe52c12762870010a8e1adff396ce1b319aae6ff81bf1f315840f632ed1ac5494d61f79a7adb9401877ef3232f62c36e1c48361f7fd3f02a9f93a70ad94134f37318ad82e5d703e5ae499d21084f8a20ceae1e8f7d9f783df734
+14:24:23:343 Connecting to owner server
+14:24:23:343 Proxy enabled but Not set
+14:24:23:343 using IP
+14:24:23:445 ssl connection successful
+14:24:23:445 REST:header(200):POST https://localhost:8043/fdo/101/msg/64 HTTP/1.1
+HOST:localhost:8043
+Content-type:application/cbor
+Content-length:225
+_connection: keep-alive
+Authorization:3b8a5f3e68804af3cd532cd1976cf15e
+
+
+14:24:31:314 REST: HTTP response line: HTTP/1.1 200
+14:24:31:314 Response code 200 received ()
+14:24:31:314 Authorization: 3b8a5f3e68804af3cd532cd1976cf15e
+14:24:31:314 Message-Type: 65
+14:24:31:314 Content type: application/cbor
+14:24:31:314 Content-length: 285
+14:24:31:314 Body: Date
+14:24:31:316 fdo_prot_ctx_run Rx Response Body:
+d08343a10101a1054ccea58f1ec7235b7ae083545359010575de5854fc9dd6ad3d33265fa62f4110d514759e683077b5e6b3d861157319894cd18d204e8d284d9d24b7b48faebdf93fb73caa5abb973a257468b6c3a8d59b63d5c8c3fb53928d28d0a3774f0645f71bd138688b71c2f42fc1eb332bdc91e94a7de5a0c3696d12ae47e3ce867244fbe464bdad3cad0787676a6094ebc44c09ead591e50b2a5c70d04829df1a4e0f90b66e9bbb266423bef60dd0355b7fe90ab215d8a4b7fa8170758cdd1f03659d1dd54c3627b076a1da676c362aef299eebdc668a99e9ebf31fd72ce79dd7d7f7cdeb88193790d2094cd62f68ea8b5528285a4e535931729a76a6f6023743de82a783124419cb7b2cbcbfa90bbb9512e485811d5d3e1e
+14:24:31:318 FDOProtTO2: Received message type 65 : 285 bytes
+14:24:31:318 TO2.SetupDevice started
+14:24:31:318 Encrypted Message Read: Encrypted Message parsed successfully
+14:24:31:318 Encrypted Message (decrypt): Decryption done
+14:24:31:318 There are 1 RendezvousDirective(s) in the RendezvousInfo
+14:24:31:318 Processing RendezvousDirective Index 0
+14:24:31:318 There are 5 RendezvousInstr(s)
+14:24:31:318 Processing RendezvousInstr Index 0
+14:24:31:318 Added RendezvousInstr entry 1
+14:24:31:318 Processing RendezvousInstr Index 1
+14:24:31:318 Added RendezvousInstr entry 2
+14:24:31:318 Processing RendezvousInstr Index 2
+14:24:31:318 Added RendezvousInstr entry 3
+14:24:31:318 Processing RendezvousInstr Index 3
+14:24:31:318 Added RendezvousInstr entry 4
+14:24:31:318 Processing RendezvousInstr Index 4
+14:24:31:318 Added RendezvousInstr entry 5
+14:24:31:318 Added RendezvousDirective entry 1
+14:24:31:318 RendezvousInfo read completed
+14:24:31:318 PublicKey.pkBody length: 91 bytes
+14:24:31:319 Signature verifies OK.
+14:24:31:319 TO2.SetupDevice: OVEntry Signature verification successful
+14:24:31:319 TO2.SetupDevice completed successfully
+14:24:31:319 TO2.DeviceServiceInfoReady started
+14:24:31:319 TO2.DeviceServiceInfoReady: *****Resale triggered.*****
+14:24:31:320 Generate Primary key context.
+14:24:31:335 TCTI Initialized succesfully!!
+14:24:31:336 Esys Context created succesfully!!
+14:24:33: 90 Saved HMAC public key context of size 48.
+14:24:33: 90 Saved HMAC private key context of size 160.
+14:24:33: 90 HMAC Key generated successfully!.
+14:24:34:109 Auth session handle flushed successfully.
+14:24:34:564 Primary key handle flushed successfully.
+14:24:34:568 Successfully generated device HMAC key from TPM.
+14:24:34:568 Hash write completed
+14:24:34:568 HMAC generation from TPM function called.
+14:24:34:568 All required function parameters available.
+14:24:34:568 Generate Primary key context.
+14:24:34:604 TCTI Initialized succesfully!!
+14:24:34:604 Esys Context created succesfully!!
+14:24:35:705 TPM Primary Key Context created successfully.
+14:24:35:705 TPM HMAC Private Key file size retreived successfully.
+14:24:35:705 TPM HMAC Private Key file content copied successfully to buffer.
+14:24:35:705 TPM HMAC Private Key Unmarshal complete successfully.
+14:24:35:705 TPM HMAC Public Key file size retreived successfully.
+14:24:35:706 TPM HMAC Public Key file content copied successfully to buffer.
+14:24:35:706 TPM HMAC Public Key Unmarshal complete successfully.
+14:24:37:379 TPM HMAC Key Context generated successfully.
+14:24:37:379 Data copied from input buffer to TPM data structure.
+14:24:39:438 HMAC created successfully.
+14:24:39:438 HMAC generation for data sequence completed successfully.
+14:24:40:993 HMAC key handle flushed successfully.
+14:24:41:999 Auth session handle flushed successfully.
+14:24:42:454 Primary key handle flushed successfully.
+14:24:42:459 TSS context flushed successfully.
+14:24:42:459 Hash write completed
+14:24:42:459 TO2.DeviceServiceInfoReady: Sent maxOwnerServiceInfoSz = 8192
+14:24:42:459 TO2.DeviceServiceInfoReady completed successfully
+14:24:42:459 fdo_prot_ctx_run Tx Request Body length: 79
+14:24:42:459 fdo_prot_ctx_run Tx Request Body:
+d08343a10101a1054cfc3214dd364b526a969019bc5838b809af8c26dbc060c7345482a523e9f1c345b257c47deb1da995fb3523309d77413ff3906f23ed53ab960010a01e1c8180abd80e4cc5ffb9
+14:24:42:461 Connecting to owner server
+14:24:42:461 Proxy enabled but Not set
+14:24:42:461 using IP
+14:24:42:592 ssl connection successful
+14:24:42:592 REST:header(199):POST https://localhost:8043/fdo/101/msg/66 HTTP/1.1
+HOST:localhost:8043
+Content-type:application/cbor
+Content-length:79
+_connection: keep-alive
+Authorization:3b8a5f3e68804af3cd532cd1976cf15e
+
+
+14:24:42:665 REST: HTTP response line: HTTP/1.1 200
+14:24:42:665 Response code 200 received ()
+14:24:42:665 Authorization: 3b8a5f3e68804af3cd532cd1976cf15e
+14:24:42:665 Message-Type: 67
+14:24:42:665 Content type: application/cbor
+14:24:42:665 Content-length: 40
+14:24:42:665 Body: Date
+14:24:42:667 fdo_prot_ctx_run Rx Response Body:
+d08343a10101a1054c37cad7702f34b8c6af2b957352570bf3a807dcee54b2b9cb0bf58f3af88958
+14:24:42:667 FDOProtTO2: Received message type 67 : 40 bytes
+14:24:42:667 TO2.OwnerServiceInfoReady started
+14:24:42:667 Encrypted Message Read: Encrypted Message parsed successfully
+14:24:42:667 Encrypted Message (decrypt): Decryption done
+14:24:42:667 TO2.OwnerServiceInfoReady: Received maxDeviceServiceInfoSz = 0
+14:24:42:667 TO2.OwnerServiceInfoReady: Received maxDeviceServiceInfoSz is less than the minimum size supported. Defaulting to 256
+14:24:42:667 TO2.OwnerServiceInfoReady: Expected Maximum Device ServiceInfo size is 256
+14:24:42:667 TO2.OwnerServiceInfoReady completed successfully
+14:24:42:667 TO2.DeviceServiceInfo started
+14:24:42:667 TO2.DeviceServiceInfo completed successfully
+14:24:42:667 fdo_prot_ctx_run Tx Request Body length: 257
+14:24:42:667 fdo_prot_ctx_run Tx Request Body:
+d08343a10101a1054cc7e09bd0d73780a98c4e2d4358ea0184bb73ee64ec90586eeb8942cca0c8efb997ef8a3ff5e21694f5cfe25b6945cd47ffa8d71ea0b4dd40d9b1cfcaa5d888899030905daac2ca3d90339f17ae4ca4bdeda991414d629d067865a31d5cc521878e7e8a9bcf760c706b59e7b42bf84e8b5f883550b9d4d7ca889815e1a7895d84607f4cba8c0ecb729717815c7d8aa939ab1987c1f5defe69d4b3fb21f10e6e42255839c1be7aa90dbd1fa1e657e9b2ceb9fc605c3a399fc406bedf89e8b4fbe35876cf94a609d7287e878e8312694938ce66ae55e64813e5348c7f1ce4730313e80b3e57c0a7d0a1989600f39201ad6663ed33f34d49969e
+14:24:42:669 Connecting to owner server
+14:24:42:669 Proxy enabled but Not set
+14:24:42:669 using IP
+14:24:42:737 ssl connection successful
+14:24:42:737 REST:header(200):POST https://localhost:8043/fdo/101/msg/68 HTTP/1.1
+HOST:localhost:8043
+Content-type:application/cbor
+Content-length:257
+_connection: keep-alive
+Authorization:3b8a5f3e68804af3cd532cd1976cf15e
+
+
+14:24:42:809 REST: HTTP response line: HTTP/1.1 200
+14:24:42:809 Response code 200 received ()
+14:24:42:809 Authorization: 3b8a5f3e68804af3cd532cd1976cf15e
+14:24:42:810 Message-Type: 69
+14:24:42:810 Content type: application/cbor
+14:24:42:810 Content-length: 42
+14:24:42:810 Body: Date
+14:24:42:812 fdo_prot_ctx_run Rx Response Body:
+d08343a10101a1054c6f5e3e2316e8bac5218479e254febb9c0775fe78bcc138dc640efa2cd761c632ff
+14:24:42:816 FDOProtTO2: Received message type 69 : 42 bytes
+14:24:42:816 TO2.OwnerServiceInfo started
+14:24:42:816 Encrypted Message Read: Encrypted Message parsed successfully
+14:24:42:816 Encrypted Message (decrypt): Decryption done
+14:24:42:817 TO2.OwnerServiceInfo completed successfully
+14:24:42:817 TO2.DeviceServiceInfo started
+14:24:42:817 TO2.DeviceServiceInfo completed successfully
+14:24:42:817 fdo_prot_ctx_run Tx Request Body length: 145
+14:24:42:818 fdo_prot_ctx_run Tx Request Body:
+d08343a10101a1054c956e188a1391edb1560e70cc587a8dcf1cc38eda7819aeceb316f1c3c260739c024552b0bffd5f80308392185ec1f25faf3cdd43ad0702a5eda771fe2ceb1400066ebe5313ca8b910b2a37425bf85dd06644fc4092951c4ff535a49ebe0c1127c16312a69634645dc0e0ffd15492f081053e09a172bcf61ede78ff7b419ba2195c309e64dbfb7fb7
+14:24:42:821 Connecting to owner server
+14:24:42:822 Proxy enabled but Not set
+14:24:42:822 using IP
+14:24:42:881 ssl connection successful
+14:24:42:881 REST:header(200):POST https://localhost:8043/fdo/101/msg/68 HTTP/1.1
+HOST:localhost:8043
+Content-type:application/cbor
+Content-length:145
+_connection: keep-alive
+Authorization:3b8a5f3e68804af3cd532cd1976cf15e
+
+
+14:24:42:932 REST: HTTP response line: HTTP/1.1 200
+14:24:42:932 Response code 200 received ()
+14:24:42:933 Authorization: 3b8a5f3e68804af3cd532cd1976cf15e
+14:24:42:933 Message-Type: 69
+14:24:42:933 Content type: application/cbor
+14:24:42:933 Content-length: 61
+14:24:42:934 Body: Date
+14:24:42:936 fdo_prot_ctx_run Rx Response Body:
+d08343a10101a1054cb630665086bf99a54496e8fd5826070a8abad273e84ef37c0d9a9f141f1f7bd5b0e07ddcbdc187088f95c8506256896bda7367ef
+14:24:42:939 FDOProtTO2: Received message type 69 : 61 bytes
+14:24:42:939 TO2.OwnerServiceInfo started
+14:24:42:939 Encrypted Message Read: Encrypted Message parsed successfully
+14:24:42:939 Encrypted Message (decrypt): Decryption done
+ServiceInfo: Activated module fdo_sys
+14:24:42:939 TO2.OwnerServiceInfo completed successfully
+14:24:42:939 TO2.Done started
+14:24:42:939 (Old) GUID before TO2: f09cff3b-6d84-4c18-b513-3b6b8dd5f979
+14:24:42:939 (New) GUID after TO2: 7c974d33-369a-4ffa-ae7f-3d19e4e7cd7e
+14:24:42:940 Successfully deleted old HMAC key.
+14:24:42:940 Generate Primary key context.
+14:24:42:956 TCTI Initialized succesfully!!
+14:24:42:956 Esys Context created succesfully!!
+14:24:44:196 Saved HMAC public key context of size 48.
+14:24:44:197 Saved HMAC private key context of size 160.
+14:24:44:198 HMAC Key generated successfully!.
+14:24:45:206 Auth session handle flushed successfully.
+14:24:45:665 Primary key handle flushed successfully.
+14:24:45:669 TPM data protection key generated successfully.
+14:24:45:669 TO2.Done: Data protection key rotated successfully!!
+14:24:45:669 TPM HMAC Replacement Private Key file size retreived successfully.
+14:24:45:670 TPM HMAC Replacement Public Key file size retreived successfully.
+14:24:45:670 TO2.Done: Updated device's new hmac key
+14:24:45:670 Writing to Normal.blob blob
+14:24:45:670 Hash write completed
+14:24:45:670 HMAC generation from TPM function called.
+14:24:45:670 All required function parameters available.
+14:24:45:670 Generate Primary key context.
+14:24:45:704 TCTI Initialized succesfully!!
+14:24:45:704 Esys Context created succesfully!!
+14:24:46:787 TPM Primary Key Context created successfully.
+14:24:46:788 TPM HMAC Private Key file size retreived successfully.
+14:24:46:788 TPM HMAC Private Key file content copied successfully to buffer.
+14:24:46:788 TPM HMAC Private Key Unmarshal complete successfully.
+14:24:46:788 TPM HMAC Public Key file size retreived successfully.
+14:24:46:788 TPM HMAC Public Key file content copied successfully to buffer.
+14:24:46:788 TPM HMAC Public Key Unmarshal complete successfully.
+14:24:48:461 TPM HMAC Key Context generated successfully.
+14:24:48:461 Data copied from input buffer to TPM data structure.
+14:24:50:498 HMAC created successfully.
+14:24:50:499 HMAC generation for data sequence completed successfully.
+14:24:52: 47 HMAC key handle flushed successfully.
+14:24:53: 50 Auth session handle flushed successfully.
+14:24:53:505 Primary key handle flushed successfully.
+14:24:53:509 TSS context flushed successfully.
+14:24:53:509 TPM HMAC computed successfully!
+14:24:53:510 TO2.Done: Updated device with new credentials
+14:24:53:510 TO2.Done completed successfully
+14:24:53:510 TO2.Done2 started
+14:24:53:510 fdo_prot_ctx_run Tx Request Body length: 57
+14:24:53:510 fdo_prot_ctx_run Tx Request Body:
+d08343a10101a1054c1cd7aab0c5ba99a8ce42f39a582220b27437f02e5bce569146daef6ad93b29e5797ac9b01bcca29c404e3f8fa3378717
+14:24:53:511 Connecting to owner server
+14:24:53:511 Proxy enabled but Not set
+14:24:53:512 using IP
+14:24:53:609 ssl connection successful
+14:24:53:610 REST:header(199):POST https://localhost:8043/fdo/101/msg/70 HTTP/1.1
+HOST:localhost:8043
+Content-type:application/cbor
+Content-length:57
+_connection: keep-alive
+Authorization:3b8a5f3e68804af3cd532cd1976cf15e
+
+
+14:24:53:662 REST: HTTP response line: HTTP/1.1 200
+14:24:53:662 Response code 200 received ()
+14:24:53:663 Authorization: 3b8a5f3e68804af3cd532cd1976cf15e
+14:24:53:663 Message-Type: 71
+14:24:53:663 Content type: application/cbor
+14:24:53:663 Content-length: 57
+14:24:53:663 Body: Date
+14:24:53:664 fdo_prot_ctx_run Rx Response Body:
+d08343a10101a1054c82419c96b4773623ae319a7e5822a1ef56774bd5ce74dbe07645f70921dcb175bf409b496bf78b1b516e3cf6e0f8eddb
+14:24:53:665 TO2.Done2 started
+14:24:53:665 FDOProtTO2: Received message type 71 : 57 bytes
+14:24:53:665 Encrypted Message Read: Encrypted Message parsed successfully
+14:24:53:665 Encrypted Message (decrypt): Decryption done
+14:24:53:665 TO2.Done2 completed successfully
+14:24:53:666
+------------------------------------ TO2 Successful --------------------------------------
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@FIDO Device Onboard Complete@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

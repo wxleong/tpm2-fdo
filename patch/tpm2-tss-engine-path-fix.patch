@@ -1,0 +1,25 @@
+From a2fbfe1653922067625beac53a7519e06a724094 Mon Sep 17 00:00:00 2001
+From: "wenxin.leong" <wenxin.leong@infineon.com>
+Date: Thu, 19 May 2022 18:12:10 +0800
+Subject: [PATCH] tpm2-tss-engine path fix
+
+---
+ cmake/blob_path.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/blob_path.cmake b/cmake/blob_path.cmake
+index ba8391b..5cb034c 100644
+--- a/cmake/blob_path.cmake
++++ b/cmake/blob_path.cmake
+@@ -32,7 +32,7 @@ if(TARGET_OS MATCHES linux)
+        -DTPM_HMAC_REPLACEMENT_PRIV_KEY=\"${BLOB_PATH}/data/tpm_hmac_replacement_priv.key\"
+        -DTPM_HMAC_DATA_PUB_KEY=\"${BLOB_PATH}/data/tpm_hmac_data_pub.key\"
+        -DTPM_HMAC_DATA_PRIV_KEY=\"${BLOB_PATH}/data/tpm_hmac_data_priv.key\"
+-       -DTPM2_TSS_ENGINE_SO_PATH=\"/usr/local/lib/engines-1.1/libtpm2tss.so\"
++       -DTPM2_TSS_ENGINE_SO_PATH=\"/usr/lib/arm-linux-gnueabihf/engines-1.1/libtpm2tss.so\"
+ 	)
+     endif()
+   
+-- 
+2.30.2
+

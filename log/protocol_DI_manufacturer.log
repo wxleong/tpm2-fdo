@@ -1,0 +1,14 @@
+10:46:54.035 [INFO ] Type 10 [h'850A016973657269616C2D3031686D6F64656C2D303158D63081D3307B02010030193117301506035504030C0E73646F2D74706D2D6465766963653059301306072A8648CE3D020106082A8648CE3D03010703420004BC65BF8AF6D490590D4404FC05D2FC25A79244AD1DBD94F3E06B68FF42202C541EE7428AFCA77CDA3B9A4B9C7A0654A0FA397E0C94E722ABB0298831E0BD12F0A000300A06082A8648CE3D040302034800304502207EF9244CBF55408401D3D2A229B9D6BE787871D9BB9EDD4ACFCCB596F9D0A8A0022100C36089536B16608AA2135AEDA7A6F7CB6A7FD9CB578A261FC9ABD96B338F8F47']
+Hibernate: select certificat0_.name as name1_0_0_, certificat0_.data as data2_0_0_ from certificate_data certificat0_ where certificat0_.name=?
+Hibernate: select certificat0_.id as id1_1_0_, certificat0_.days as days2_1_0_ from certificate_validity certificat0_ where certificat0_.id=?
+Hibernate: select certificat0_.name as name1_0_0_, certificat0_.data as data2_0_0_ from certificate_data certificat0_ where certificat0_.name=?
+Hibernate: select rvdata0_.id as id1_5_0_, rvdata0_.data as data2_5_0_ from rv_data rvdata0_ where rvdata0_.id=?
+Hibernate: insert into protocol_session (created_on, data, name) values (?, ?, ?)
+10:46:56.301 [INFO ] Type 11 [h'86186550516AEB2C08B442F094F4BFE9B2E41AF2818582054A696C6F63616C686F7374820343191F68820C4101820245447F000001820443191F69686D6F64656C2D3031830A01585B3059301306072A8648CE3D020106082A8648CE3D030107034200047460829CD012494ABC186684A53382CFCE8FB62BAD336DDD377D20C37EE6351F206EA45E3D1C67DBCAB60C63736294B458311647F156E6ADFD9799A28F188E43822F5820AE3CC792B41AE70DB16A59B77D26D7462FA4E6D0D094B563BDD6BD61851BB87D']
+10:47:06.934 [INFO ] Type 12 [[5, h'40DFA4B3396A5741D468D151B93AE918B3034E183B37312E1EE62D0BCB6F2410']]
+Hibernate: select protocolse0_.name as name1_4_0_, protocolse0_.created_on as created_2_4_0_, protocolse0_.data as data3_4_0_ from protocol_session protocolse0_ where protocolse0_.name=?
+Hibernate: select manufactur_.serial_no, manufactur_.created_on as created_2_2_, manufactur_.data as data3_2_ from manufactured_voucher manufactur_ where manufactur_.serial_no=?
+Hibernate: insert into manufactured_voucher (created_on, data, serial_no) values (?, ?, ?)
+Hibernate: select protocolse0_.name as name1_4_0_, protocolse0_.created_on as created_2_4_0_, protocolse0_.data as data3_4_0_ from protocol_session protocolse0_ where protocolse0_.name=?
+Hibernate: delete from protocol_session where name=?
+10:47:07.053 [INFO ] Type 13 []

@@ -1,0 +1,25 @@
+From 7ac42a8267f41319fbc15b546bba05d80cd87905 Mon Sep 17 00:00:00 2001
+From: "wenxin.leong" <wenxin.leong@infineon.com>
+Date: Thu, 19 May 2022 11:19:28 +0800
+Subject: [PATCH] fix compilation error
+
+---
+ lib/credentials_from_file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/credentials_from_file.c b/lib/credentials_from_file.c
+index b134f9c..68de0b9 100644
+--- a/lib/credentials_from_file.c
++++ b/lib/credentials_from_file.c
+@@ -231,7 +231,7 @@ bool read_normal_device_credentials(const char *dev_cred_file,
+ 		return true;
+ 	}
+ 
+-	LOG(LOG_DEBUG, "Reading DeviceCredential blob of length %"PRIu64"\n", dev_cred_len);
++	LOG(LOG_DEBUG, "Reading DeviceCredential blob of length %"PRIu64"\n", (long long unsigned int)dev_cred_len);
+ 
+ 	fdor = fdo_alloc(sizeof(fdor_t));
+ 	if (!fdor || !fdor_init(fdor) || !fdo_block_alloc_with_size(&fdor->b, dev_cred_len)) {
+-- 
+2.30.2
+

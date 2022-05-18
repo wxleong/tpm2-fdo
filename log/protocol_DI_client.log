@@ -1,0 +1,174 @@
+pi@raspberrypi:~/client-sdk-fidoiot $ ./build/linux-client
+10:46:49:753 Starting FIDO Device Onboard
+10:46:49:754 Generate Primary key context.
+10:46:49:789 TCTI Initialized succesfully!!
+10:46:49:789 Esys Context created succesfully!!
+10:46:52:184 Saved HMAC public key context of size 48.
+10:46:52:185 Saved HMAC private key context of size 160.
+10:46:52:185 HMAC Key generated successfully!.
+10:46:53:190 Auth session handle flushed successfully.
+10:46:53:645 Primary key handle flushed successfully.
+10:46:53:649 TPM data protection key generated successfully.
+10:46:53:649 TPM data protection key generated successfully.
+10:46:53:650 ./data/Normal.blob file is empty!
+10:46:53:650 Platform Normal blob size is zero, DI not done!
+10:46:53:655 ./data/mfg_proxy.dat file is empty!
+'./data/mfg_proxy.dat' with proxy info absent
+10:46:53:655 ./data/rv_proxy.dat file is empty!
+'./data/rv_proxy.dat' with proxy info absent
+10:46:53:655 ./data/owner_proxy.dat file is empty!
+'./data/owner_proxy.dat' with proxy info absent
+10:46:53:655 ./data/Normal.blob file is empty!
+10:46:53:656 DeviceCredential is empty. Set state to run DI
+10:46:53:656 Device is ready for DI
+10:46:53:656 ./data/max_serviceinfo_sz.bin file is empty!
+Maximum supported DeviceServiceInfo size: 256 bytes
+Maximum supported OwnerServiceInfo size: 256 bytes
+10:46:53:656
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                             Starting DI
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+10:46:53:656 Manufacturer Transport protocol: HTTP
+10:46:53:656 Manufacturer DNS will be used
+10:46:53:656 Manufacturer Port: 8039
+10:46:53:657 Generated DeviceMfgInfo successfully
+10:46:53:657 DIAppStart completed
+10:46:53:657 fdo_prot_ctx_run Tx Request Body length: 241
+10:46:53:657 fdo_prot_ctx_run Tx Request Body:
+8158ee850a016973657269616c2d3031686d6f64656c2d303158d63081d3307b02010030193117301506035504030c0e73646f2d74706d2d6465766963653059301306072a8648ce3d020106082a8648ce3d03010703420004bc65bf8af6d490590d4404fc05d2fc25a79244ad1dbd94f3e06b68ff42202c541ee7428afca77cda3b9a4b9c7a0654a0fa397e0c94e722abb0298831e0bd12f0a000300a06082a8648ce3d040302034800304502207ef9244cbf55408401d3d2a229b9d6be787871d9bb9edd4acfccb596f9d0a8a0022100c36089536b16608aa2135aeda7a6f7cb6a7fd9cb578a261fc9abd96b338f8f47
+10:46:53:662 Proxy enabled but Not set
+10:46:53:662 using DNS: localhost
+10:46:53:662 Resolving DNS-URL: <localhost>
+10:46:53:664 Connecting to manufacturer Server
+10:46:53:664 Proxy enabled but Not set
+10:46:53:664 using IP
+10:46:53:665 Rest Header write returns 151/151 bytes
+
+10:46:53:665 REST:header(151):POST http://localhost:8039/fdo/101/msg/10 HTTP/1.1
+HOST:localhost:8039
+Content-type:application/cbor
+Content-length:241
+_connection: keep-alive
+
+
+10:46:53:665 Rest Body write returns 241/241 bytes
+
+10:46:56:309 REST: HTTP response line: HTTP/1.1 200
+10:46:56:309 Response code 200 received ()
+10:46:56:309 Authorization: b84702ff34adca742334e9e195ca4bb6
+10:46:56:309 Message-Type: 11
+10:46:56:309 Content type: application/cbor
+10:46:56:310 Content-length: 203
+10:46:56:310 Body: Date
+10:46:56:310 fdo_prot_ctx_run Rx Response Body:
+8158c886186550516aeb2c08b442f094f4bfe9b2e41af2818582054a696c6f63616c686f7374820343191f68820c4101820245447f000001820443191f69686d6f64656c2d3031830a01585b3059301306072a8648ce3d020106082a8648ce3d030107034200047460829cd012494abc186684a53382cfce8fb62bad336ddd377d20c37ee6351f206ea45e3d1c67dbcab60c63736294b458311647f156e6adfd9799a28f188e43822f5820ae3cc792b41ae70db16a59b77d26d7462fa4e6d0d094b563bdd6bd61851bb87d
+10:46:56:311 FDOProtDI: Received message type 11 : 203 bytes
+10:46:56:311 Generate Primary key context.
+10:46:56:327 TCTI Initialized succesfully!!
+10:46:56:327 Esys Context created succesfully!!
+10:46:57:627 Saved HMAC public key context of size 48.
+10:46:57:627 Saved HMAC private key context of size 160.
+10:46:57:627 HMAC Key generated successfully!.
+10:46:58:627 Auth session handle flushed successfully.
+10:46:59: 82 Primary key handle flushed successfully.
+10:46:59: 86 Successfully generated device HMAC key from TPM.
+10:46:59: 86 fdo_ov_hdr_read OVHeader read started!
+10:46:59: 86 There are 1 RendezvousDirective(s) in the RendezvousInfo
+10:46:59: 86 Processing RendezvousDirective Index 0
+10:46:59: 86 There are 5 RendezvousInstr(s)
+10:46:59: 87 Processing RendezvousInstr Index 0
+10:46:59: 87 Added RendezvousInstr entry 1
+10:46:59: 87 Processing RendezvousInstr Index 1
+10:46:59: 87 Added RendezvousInstr entry 2
+10:46:59: 87 Processing RendezvousInstr Index 2
+10:46:59: 87 Added RendezvousInstr entry 3
+10:46:59: 87 Processing RendezvousInstr Index 3
+10:46:59: 87 Added RendezvousInstr entry 4
+10:46:59: 87 Processing RendezvousInstr Index 4
+10:46:59: 87 Added RendezvousInstr entry 5
+10:46:59: 87 Added RendezvousDirective entry 1
+10:46:59: 87 RendezvousInfo read completed
+10:46:59: 87 PublicKey.pkBody length: 91 bytes
+10:46:59: 87 fdo_ov_hdr_read OVHeader read completed!
+10:46:59: 87 HMAC generation from TPM function called.
+10:46:59: 87 All required function parameters available.
+10:46:59: 87 Generate Primary key context.
+10:46:59:123 TCTI Initialized succesfully!!
+10:46:59:124 Esys Context created succesfully!!
+10:47:00:232 TPM Primary Key Context created successfully.
+10:47:00:232 TPM HMAC Private Key file size retreived successfully.
+10:47:00:232 TPM HMAC Private Key file content copied successfully to buffer.
+10:47:00:232 TPM HMAC Private Key Unmarshal complete successfully.
+10:47:00:233 TPM HMAC Public Key file size retreived successfully.
+10:47:00:233 TPM HMAC Public Key file content copied successfully to buffer.
+10:47:00:233 TPM HMAC Public Key Unmarshal complete successfully.
+10:47:01:858 TPM HMAC Key Context generated successfully.
+10:47:01:858 Data copied from input buffer to TPM data structure.
+10:47:03:907 HMAC created successfully.
+10:47:03:907 HMAC generation for data sequence completed successfully.
+10:47:05:452 HMAC key handle flushed successfully.
+10:47:06:472 Auth session handle flushed successfully.
+10:47:06:915 Primary key handle flushed successfully.
+10:47:06:919 TSS context flushed successfully.
+10:47:06:919 DISetCredentials completed
+10:47:06:919 Hash write completed
+10:47:06:919 DISetHMAC completed
+10:47:06:919 fdo_prot_ctx_run Tx Request Body length: 37
+10:47:06:920 fdo_prot_ctx_run Tx Request Body:
+818205582040dfa4b3396a5741d468d151b93ae918b3034e183b37312e1ee62d0bcb6f2410
+10:47:06:920 Connecting to manufacturer Server
+10:47:06:920 Proxy enabled but Not set
+10:47:06:920 using IP
+10:47:06:921 Rest Header write returns 198/198 bytes
+
+10:47:06:921 REST:header(198):POST http://localhost:8039/fdo/101/msg/12 HTTP/1.1
+HOST:localhost:8039
+Content-type:application/cbor
+Content-length:37
+_connection: keep-alive
+Authorization:b84702ff34adca742334e9e195ca4bb6
+
+
+10:47:06:921 Rest Body write returns 37/37 bytes
+
+10:47:07: 54 REST: HTTP response line: HTTP/1.1 200
+10:47:07: 54 Response code 200 received ()
+10:47:07: 54 Authorization: b84702ff34adca742334e9e195ca4bb6
+10:47:07: 54 Message-Type: 13
+10:47:07: 54 Content type: application/cbor
+10:47:07: 54 Content-length: 1
+10:47:07: 54 Body: Date
+10:47:07: 55 fdo_prot_ctx_run Rx Response Body:
+80
+10:47:07: 55 FDOProtDI: Received message type 13 : 1 bytes
+10:47:07: 55 Writing to Normal.blob blob
+10:47:07: 55 Hash write completed
+10:47:07: 55 HMAC generation from TPM function called.
+10:47:07: 55 All required function parameters available.
+10:47:07: 55 Generate Primary key context.
+10:47:07: 71 TCTI Initialized succesfully!!
+10:47:07: 71 Esys Context created succesfully!!
+10:47:07:619 TPM Primary Key Context created successfully.
+10:47:07:619 TPM HMAC Private Key file size retreived successfully.
+10:47:07:619 TPM HMAC Private Key file content copied successfully to buffer.
+10:47:07:619 TPM HMAC Private Key Unmarshal complete successfully.
+10:47:07:619 TPM HMAC Public Key file size retreived successfully.
+10:47:07:619 TPM HMAC Public Key file content copied successfully to buffer.
+10:47:07:619 TPM HMAC Public Key Unmarshal complete successfully.
+10:47:09:116 TPM HMAC Key Context generated successfully.
+10:47:09:116 Data copied from input buffer to TPM data structure.
+10:47:10:570 HMAC created successfully.
+10:47:10:570 HMAC generation for data sequence completed successfully.
+10:47:11:697 HMAC key handle flushed successfully.
+10:47:12:703 Auth session handle flushed successfully.
+10:47:13:159 Primary key handle flushed successfully.
+10:47:13:163 TSS context flushed successfully.
+10:47:13:163 TPM HMAC computed successfully!
+10:47:13:164 Device credentials successfully written!!
+(Current) GUID after DI: 516aeb2c-08b4-42f0-94f4-bfe9b2e41af2
+10:47:13:164 DIDone completed
+10:47:13:164
+------------------------------------ DI Successful --------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@FIDO Device Initialization Complete@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
