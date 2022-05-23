@@ -8,6 +8,7 @@ TPM enabled FIDO Device Onboard (FDO) guide.
 - **[Device Set Up](#device-set-up)**
 - **[Services Set Up](#services-set-up)**
 - **[Execute FDO Protocols](#execute-fdo-protocols)**
+- **[Execute Resale Protocol](#execute-resale-protocol)**
 - **[References](#references)**
 - **[License](#license)**
 
@@ -141,177 +142,197 @@ $ java -jar aio.jar
 ```
 -->
 
+1. Start services:<br>
+
+    <!--
+    Find the individual server config file at ~/pri-fidoiot/component-samples/demo/x/service.yml
+    -->
+
+    Start manufacturer service (https://localhost:8038, http://localhost:8039):
+    ```
+    $ cd ~/pri-fidoiot/component-samples/demo/manufacturer
+    $ java -jar aio.jar
+    ```
+    > - Deleting `~/pri-fidoiot/component-samples/demo/manufacturer/app-data` will force the service to reinitialize the database.
+
+    Start rendezvous service (http://localhost:8040, https://localhost:8041):
+    ```
+    $ cd ~/pri-fidoiot/component-samples/demo/rv
+    $ java -jar aio.jar
+    ```
+    > - Deleting `~/pri-fidoiot/component-samples/demo/rv/app-data` will force the service to reinitialize the database.
+
+    Start owner service (http://localhost:8042, https://localhost:8043):
+    ```
+    $ cd ~/pri-fidoiot/component-samples/demo/owner
+    $ java -jar aio.jar
+    ```
+    > - Deleting `~/pri-fidoiot/component-samples/demo/owner/app-data` will force the service to reinitialize the database.
+
+2. Device Initialize Protocol (DI):<br> 
+
+    Configure manufacturer service's RendezvousInfo:
+    ```
+    $ curl -d \
+    "[[[5,\"localhost\"],[3,8041],[12,2],[2,\"localhost\"],[4,8041]]]" \
+    -H "Content-Type: text/plain" \
+    --digest -u apiUser:"" \
+    -X POST \
+    http://localhost:8039/api/v1/rvinfo
+    ```
+    > The RendezvousInfo is based on [[7]](#7):
+    > - `[[[5, RVDns], [3, RVDevPort], [12, RVProtocol], [2, RVIPAddress], [4, RVOwnerPort]]]`
+    > - The RendezvousInfo type indicates the manner and order in which the Device and Owner find the Rendezvous Server. It is configured during manufacturing (e.g., at an ODM), so the manufacturing entity has the choice of which Rendezvous Server(s) to use and how to access it or them.
+    > - The value for api_user is present in `~/pri-fidoiot/component-samples/demo/manufacturer/service.yml` file and value for api_password is present in `~/pri-fidoiot/component-samples/demo/manufacturer/service.env` file.
+
+    Execute the DI protocol ([client log](log/protocol_DI_client.log), [manufacturer log](log/protocol_DI_manufacturer.log)) and record down the GUID and serial number:
+    ```
+    $ cd ~/client-sdk-fidoiot
+    $ ./build/linux-client
+    ```
+    > - An Ownership Voucher will be created and store on manufacturer service
+    > - A TPM backed HMAC key is created and stored on device `~/client-sdk-fidoiot/data/tpm_hmac_data_priv.key`.
+    > - Deleting `~/client-sdk-fidoiot/data/Normal.blob` file will force the device to re-run DI protocol.
+    <!--
+    During DI protocol (DISetCredentials, Type 11), the RendezvousInfo is set to OVHeader which stores in the device Normal.blob. This is how the device learn about rendezvous url.
+    -->
+
+3. Extension of the Ownership Voucher:<br>
+
+    Get owner certificate:
+    ```
+    $ curl \
+    --digest -u apiUser:"" \
+    http://localhost:8042/api/v1/certificate?alias=SECP256R1 \
+    > ~/owner.crt
+    ```
+    > - The value for api_user is present in `~/pri-fidoiot/component-samples/demo/owner/service.yml` file and value for api_password is present in `~/pri-fidoiot/component-samples/demo/owner/service.env` file.
+
+    Extension of the Ownership Voucher, from manufacturer to a new owner:
+    ```
+    $ curl --data-raw "`cat ~/owner.crt`" \
+    -H "Content-Type: text/plain" \
+    --digest -u apiUser:"" \
+    -X POST \
+    http://localhost:8039/api/v1/mfg/vouchers/${serial_number} \
+    > ~/extended-voucher.txt
+    ```
+    > - In this example, the serial_number is serial-01.
+
+4. Transfer Ownership Protocol 0 (TO0):<br>
+
+    Upload the extended Ownership Voucher to owner:
+    ```
+    $ curl --data-raw "`cat ~/extended-voucher.txt`" \
+    -H "Content-Type: text/plain" \
+    --digest -u apiUser:"" \
+    -X POST \
+    http://localhost:8042/api/v1/owner/vouchers
+    ```
+    > - Returns a list of registered Ownership Voucher:
+    >   ```
+    >   $ curl \
+    >     --digest -u apiUser:"" \
+    >     http://localhost:8042/api/v1/owner/vouchers
+    >   ```
+
+    Configure owner service's RVTO2Addr:
+    ```
+    $ curl -d \
+    "[[\"localhost\",\"localhost\",8043,5]]" \
+    -H "Content-Type: text/plain" \
+    --digest -u apiUser:"" \
+    -X POST \
+    http://localhost:8042/api/v1/owner/redirect
+    ```
+    > The RVTO2Addr is based on [[8]](#8):
+    > - `[[RVIP, RVDNS, RVPort, RVProtocol]]`
+    > - The RVTO2Addr indicates to the Device how to contact the Owner to run the TO2 protocol. The RVTO2Addr is transmitted by the Owner to the Rendezvous Server during the TO0 protocol, and conveyed to the Device during the TO1 protocol.
+
+    Execute the TO0 protocol ([owner log](log/protocol_TO0_owner.log), [rendezvous log](log/protocol_TO0_rendezvous.log)):
+    ```
+    $ curl \
+    --digest -u apiUser:"" \
+    http://localhost:8042/api/v1/to0/${device_guid}
+    ```
+    > An example of device_guid: 30a9dbe4-206c-47e3-8c43-a18abba63697
+
+5. **Optional step.** ServiceInfo and Management Service - Agent Interactions:<br>
+    
+    <!--
+    In this approach we fetch the resource from a URL.
+
+    [Optional] Configure the owner ServiceInfo [[9]](#9) package. The example given here is to execute a custom script:
+    ```
+    $ curl --data-raw \
+    '[{"filedesc" : "setup.sh","resource" : "https://github.com/wxleong/tpm2-fdo/raw/develop-genesis/script/setup.sh/token=.....?????"}, {"exec" : ["/usr/bin/bash","setup.sh"] }]' \
+    -H "Content-Type: text/plain" \
+    --digest -u apiUser:"" \
+    -X POST \
+    http://localhost:8042/api/v1/owner/svi
+    ```
+    > This is based on [[10]](#10):
+    > - `'[{"filedesc" : "setup.sh","resource" : "https://github.com/wxleong/tpm2-fdo/raw/develop-genesis/script/setup.sh"}, {"exec" : ["/usr/bin/bash","setup.sh"] }]'` means, fetch the content of "setup.sh" from the resource link then execute it.
+    -->
+
+    <!--
+    In this appraoch we fetch the resource from the service database SYSTEM_RESOURCE table.
+    -->
+    Configure the owner service's ServiceInfo [[9]](#9) package. The example given here will execute a [custom script](script/setup.sh) on the client platform:
+    ```
+    # Upload a script to the owner service
+    $ curl --data-binary \
+    '@/home/pi/tpm2-fdo/script/setup.sh' \
+    -H "Content-Type: text/plain" \
+    --digest -u apiUser:"" \
+    -X POST \
+    http://localhost:8042/api/v1/owner/resource?filename=setup-script
+
+    # Configure the ServiceInfo
+    $ curl --data-raw \
+    '[{"filedesc" : "setup.sh","resource" : "setup-script"}, {"exec" : ["/usr/bin/bash","setup.sh"] }]' \
+    -H "Content-Type: text/plain" \
+    --digest -u apiUser:"" \
+    -X POST \
+    http://localhost:8042/api/v1/owner/svi
+    ```
+    > This is based on [[10]](#10):
+    > - `'[{"filedesc" : "setup.sh","resource" : "setup-script"}, {"exec" : ["/usr/bin/bash","setup.sh"] }]'` translates to download the resource "setup-script" and store it as "setup.sh" on the client platform, and subsequently run the "setup.sh" with a bash shell.
+    <!--
+    The owner side:
+    The string is parsed to: pri-fidoiot\protocol\src\main\java\org\fidoalliance\fdo\protocol\db\FdoSysInstruction.java
+    The FdoSysInstruction will be processed in pri-fidoiot\protocol\src\main\java\org\fidoalliance\fdo\protocol\db\FdoSysOwnerModule.java
+
+    The client side:
+    The setup.sh will be downloaded to the device and it will be executed in client-sdk-fidoiot\device_modules\fdo_sys\sys_utils_linux.c. A fork will happen to create a child process to execute the script with execv("/usr/bin/bash", ".../setup.sh"). The parent process will keep track of the child.
+    "filedesc" cannot contain path, hence, the file will be downloaded to your current workspace. Check out the is_valid_filename() method in client-sdk-fidoiot\device_modules\fdo_sys\sys_utils_linux.c.
+    "exec" can contain path.
+    -->
+
+6. Transfer Ownership Protocol 1&2 (TO1 & TO2):<br>
+
+    Execute the TO1 and TO2 protocol:
+    ```
+    $ cd ~/client-sdk-fidoiot
+    $ ./build/linux-client
+    ```
+    > Sample logs:
+    > - Without custom ServiceInfo:
+    >   - [Client log](log/protocol_TO1_TO2_wo_si_client.log)
+    >   - [Rendezvous log](log/protocol_TO1_TO2_wo_si_rendezvous.log)
+    >   - [Owner log](log/protocol_TO1_TO2_wo_si_owner.log)
+    > - With custom ServiceInfo:
+    >   - [Client log](log/protocol_TO1_TO2_w_si_client.log)
+    >   - [Rendezvous log](log/protocol_TO1_TO2_w_si_rendezvous.log)
+    >   - [Owner log](log/protocol_TO1_TO2_w_si_owner.log)
+
+# Execute Resale Protocol
+
+To-do.
+
 <!--
-Find the individual server config file at ~/pri-fidoiot/component-samples/demo/x/service.yml
+on owner service, use the resell endpoint to obtain an extended ownership voucher (i.e., ~/extended-voucher.txt), for demonstration purpose, use the same owner as the new owner, so read the certificate from the owner service. After obtaining the new extended ownership voucher, restart the whole process again, starting from "Upload the extended Ownership Voucher to owner:..."
 -->
-
-Start manufacturer service (https://localhost:8038, http://localhost:8039):
-```
-$ cd ~/pri-fidoiot/component-samples/demo/manufacturer
-$ java -jar aio.jar
-```
-> - Deleting `~/pri-fidoiot/component-samples/demo/manufacturer/app-data` will force the service to reinitialize the database.
-
-Start rendezvous service (http://localhost:8040, https://localhost:8041):
-```
-$ cd ~/pri-fidoiot/component-samples/demo/rv
-$ java -jar aio.jar
-```
-> - Deleting `~/pri-fidoiot/component-samples/demo/rv/app-data` will force the service to reinitialize the database.
-
-Start owner service (http://localhost:8042, https://localhost:8043):
-```
-$ cd ~/pri-fidoiot/component-samples/demo/owner
-$ java -jar aio.jar
-```
-> - Deleting `~/pri-fidoiot/component-samples/demo/owner/app-data` will force the service to reinitialize the database.
-
-Configure manufacturer service's RendezvousInfo:
-```
-$ curl -d \
-"[[[5,\"localhost\"],[3,8041],[12,2],[2,\"localhost\"],[4,8041]]]" \
--H "Content-Type: text/plain" \
---digest -u apiUser:"" \
--X POST \
-http://localhost:8039/api/v1/rvinfo
-```
-> The RendezvousInfo is based on [[7]](#7):
-> - `[[[5, RVDns], [3, RVDevPort], [12, RVProtocol], [2, RVIPAddress], [4, RVOwnerPort]]]`
-> - The RendezvousInfo type indicates the manner and order in which the Device and Owner find the Rendezvous Server. It is configured during manufacturing (e.g., at an ODM), so the manufacturing entity has the choice of which Rendezvous Server(s) to use and how to access it or them.
-> - The value for api_user is present in `~/pri-fidoiot/component-samples/demo/manufacturer/service.yml` file and value for api_password is present in `~/pri-fidoiot/component-samples/demo/manufacturer/service.env` file.
-
-Execute the DI protocol ([client log](log/protocol_DI_client.log), [manufacturer log](log/protocol_DI_manufacturer.log)) and record down the GUID and serial number:
-```
-$ cd ~/client-sdk-fidoiot
-$ ./build/linux-client
-```
-> - An Ownership Voucher will be created and store on manufacturer service
-> - A TPM backed HMAC key is created and stored on device `~/client-sdk-fidoiot/data/tpm_hmac_data_priv.key`.
-> - Deleting `~/client-sdk-fidoiot/data/Normal.blob` file will force the device to re-run DI protocol.
-<!--
-During DI protocol (DISetCredentials, Type 11), the RendezvousInfo is set to OVHeader which stores in the device Normal.blob. This is how the device learn about rendezvous url.
--->
-
-Get owner certificate:
-```
-$ curl \
---digest -u apiUser:"" \
-http://localhost:8042/api/v1/certificate?alias=SECP256R1 \
-> ~/owner.crt
-```
-> - The value for api_user is present in `~/pri-fidoiot/component-samples/demo/owner/service.yml` file and value for api_password is present in `~/pri-fidoiot/component-samples/demo/owner/service.env` file.
-
-Extension of the Ownership Voucher, from manufacturer to a new owner:
-```
-$ curl --data-raw "`cat ~/owner.crt`" \
--H "Content-Type: text/plain" \
---digest -u apiUser:"" \
--X POST \
-http://localhost:8039/api/v1/mfg/vouchers/${serial_number} \
-> ~/extended-voucher.txt
-```
-> - In this example, the serial_number is serial-01.
-
-Upload the extended Ownership Voucher to owner:
-```
-$ curl --data-raw "`cat ~/extended-voucher.txt`" \
--H "Content-Type: text/plain" \
---digest -u apiUser:"" \
--X POST \
-http://localhost:8042/api/v1/owner/vouchers
-```
-> - Returns a list of registered Ownership Voucher:
->   ```
->   $ curl \
->     --digest -u apiUser:"" \
->     http://localhost:8042/api/v1/owner/vouchers
->   ```
-
-Configure owner service's RVTO2Addr:
-```
-$ curl -d \
-"[[\"localhost\",\"localhost\",8043,5]]" \
--H "Content-Type: text/plain" \
---digest -u apiUser:"" \
--X POST \
-http://localhost:8042/api/v1/owner/redirect
-```
-> The RVTO2Addr is based on [[8]](#8):
-> - `[[RVIP, RVDNS, RVPort, RVProtocol]]`
-> - The RVTO2Addr indicates to the Device how to contact the Owner to run the TO2 protocol. The RVTO2Addr is transmitted by the Owner to the Rendezvous Server during the TO0 protocol, and conveyed to the Device during the TO1 protocol.
-
-Execute the TO0 protocol ([owner log](log/protocol_TO0_owner.log), [rendezvous log](log/protocol_TO0_rendezvous.log)):
-```
-$ curl \
---digest -u apiUser:"" \
-http://localhost:8042/api/v1/to0/${device_guid}
-```
-> An example of device_guid: 30a9dbe4-206c-47e3-8c43-a18abba63697
-
-<!--
-In this approach we fetch the resource from a URL.
-
-[Optional] Configure the owner ServiceInfo [[9]](#9) package. The example given here is to execute a custom script:
-```
-$ curl --data-raw \
-'[{"filedesc" : "setup.sh","resource" : "https://github.com/wxleong/tpm2-fdo/raw/develop-genesis/script/setup.sh/token=.....?????"}, {"exec" : ["/usr/bin/bash","setup.sh"] }]' \
--H "Content-Type: text/plain" \
---digest -u apiUser:"" \
--X POST \
-http://localhost:8042/api/v1/owner/svi
-```
-> This is based on [[10]](#10):
-> - `'[{"filedesc" : "setup.sh","resource" : "https://github.com/wxleong/tpm2-fdo/raw/develop-genesis/script/setup.sh"}, {"exec" : ["/usr/bin/bash","setup.sh"] }]'` means, fetch the content of "setup.sh" from the resource link then execute it.
--->
-
-<!--
-In this appraoch we fetch the resource from the service database SYSTEM_RESOURCE table.
--->
-**Optional step:** Configure the owner service's ServiceInfo [[9]](#9) package. The example given here will execute a [custom script](script/setup.sh) on the client platform:
-```
-# Upload a script to the owner service
-$ curl --data-binary \
-'@/home/pi/tpm2-fdo/script/setup.sh' \
--H "Content-Type: text/plain" \
---digest -u apiUser:"" \
--X POST \
-http://localhost:8042/api/v1/owner/resource?filename=setup-script
-
-# Configure the ServiceInfo
-$ curl --data-raw \
-'[{"filedesc" : "setup.sh","resource" : "setup-script"}, {"exec" : ["/usr/bin/bash","setup.sh"] }]' \
--H "Content-Type: text/plain" \
---digest -u apiUser:"" \
--X POST \
-http://localhost:8042/api/v1/owner/svi
-```
-> This is based on [[10]](#10):
-> - `'[{"filedesc" : "setup.sh","resource" : "setup-script"}, {"exec" : ["/usr/bin/bash","setup.sh"] }]'` translates to download the resource "setup-script" and store it as "setup.sh" on the client platform, and subsequently run the "setup.sh" with a bash shell.
-<!--
-The owner side:
-The string is parsed to: pri-fidoiot\protocol\src\main\java\org\fidoalliance\fdo\protocol\db\FdoSysInstruction.java
-The FdoSysInstruction will be processed in pri-fidoiot\protocol\src\main\java\org\fidoalliance\fdo\protocol\db\FdoSysOwnerModule.java
-
-The client side:
-The setup.sh will be downloaded to the device and it will be executed in client-sdk-fidoiot\device_modules\fdo_sys\sys_utils_linux.c. A fork will happen to create a child process to execute the script with execv("/usr/bin/bash", ".../setup.sh"). The parent process will keep track of the child.
-"filedesc" cannot contain path, hence, the file will be downloaded to your current workspace. Check out the is_valid_filename() method in client-sdk-fidoiot\device_modules\fdo_sys\sys_utils_linux.c.
-"exec" can contain path.
--->
-
-Execute the TO1 and TO2 protocol:
-```
-$ cd ~/client-sdk-fidoiot
-$ ./build/linux-client
-```
-> Sample logs:
-> - Without custom ServiceInfo:
->   - [Client log](log/protocol_TO1_TO2_wo_si_client.log)
->   - [Rendezvous log](log/protocol_TO1_TO2_wo_si_rendezvous.log)
->   - [Owner log](log/protocol_TO1_TO2_wo_si_owner.log)
-> - With custom ServiceInfo:
->   - [Client log](log/protocol_TO1_TO2_w_si_client.log)
->   - [Rendezvous log](log/protocol_TO1_TO2_w_si_rendezvous.log)
->   - [Owner log](log/protocol_TO1_TO2_w_si_owner.log)
 
 <!--
 Reseller service:
